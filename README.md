@@ -1,4 +1,5 @@
 ## Requirement
+- install Docker as container runtime for minikube
 - install kubectl
 - install minikube (optional)
 
