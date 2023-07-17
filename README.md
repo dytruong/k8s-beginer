@@ -123,3 +123,9 @@ Because the IP address was provided by Kubenete node and assign automatically an
 
 1. Why we need to load balancer for the multiple nodes in cluster?
 - Because the deployment and pods can share to the different nodes in the same cluster.
+
+
+
+#### Question for the MV setup
+1. How to setup replicas 1:1 in each node?
+2. Logic flow from the stage Dev create service?
