@@ -1,6 +1,6 @@
 ### try install rancher locally again
 [ ] Install docker
-[ ] Install Kubenetes cluster (RKE, K3S, RKE2)
+[ ] Install Kubenetes cluster (RKE, **K3S**, RKE2)
 [ ] Install Kubectl
 
 ### Find out to setup the infrastructure with LoadBalancer
