@@ -1,16 +1,25 @@
 ### try install rancher locally again
-*** Image for instance should be Ubuntu 20.04 ***
-[ ] Install docker
-[ ] Install Kubenetes cluster (**K3S**, RKE2)
-[ ] Install Kubectl
+[x] Install docker (optional)
+[x] Install Kubenetes cluster (**K3S**, RKE2)
+[x] Install Kubectl
 
 ### Find out to setup the infrastructure with LoadBalancer
-[ ]  1x load balancer
-[ ]  2x Node worker
-[ ]  1x Mysql server
+[x] 1x load balancer
+[x] 2x Node worker
+[ ] 1x Mysql server
 
 ### Install Helm chart 
-[ ] Find out how to connect to Rancher
+[x] Find out how to connect to Rancher
 
 ### Apply ArgoCD use github
-[ ] Find out how to install argocd
+[x] Find out how to install argocd
+
+### Write pipeline to deploy app to k8s
+[ ] add secret key to secret k8s
+[ ] write python fastAPI and build docker image
+[ ] try to map service to other service
+[ ] write pipeline CI/CD
+
+### public app to outside use ingress
+[ ] run public app constanly
+[ ] split path to the domain

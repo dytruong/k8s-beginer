@@ -124,8 +124,74 @@ Because the IP address was provided by Kubenete node and assign automatically an
 1. Why we need to load balancer for the multiple nodes in cluster?
 - Because the deployment and pods can share to the different nodes in the same cluster.
 
+## Setup rancher
+### Disable firewall
+- redhat/centos:
+> systemctl disable firewalld --now
+
+- ubuntu:
+> ufw disable
+
+### Install k8s cluster - k3s
+> curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.11+k3s1 sh -
+
+### Install kubectl
+> curl -LO https://dl.k8s.io/release/v1.25.11/bin/linux/amd64/kubectl
+> chmod +x ./kubectl
+> mv ./kubectl /usr/local/bin/
+
+### Install k3s agent (for node server)
+> curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.11+k3s1 K3S_URL=https://<IP_SERVER_CLUSTER>:6443 K3S_TOKEN=</var/lib/rancher/k3s/server/node-token> sh -
 
 
-#### Question for the MV setup
-1. How to setup replicas 1:1 in each node?
-2. Logic flow from the stage Dev create service?
+## Install heml cli
+> curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+## Install rancher from helm CLI
+> helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+
+> kubectl create namespace cattle-system
+
+> kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
+
+> helm repo add jetstack https://charts.jetstack.io
+
+> helm repo update
+
+> helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.11.0
+
+## install rancher
+> helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=<IP_SERVER_RANCHER>.sslip.io \
+  --set replicas=1 \
+  --set bootstrapPassword=<PASSWORD_LOGIN_RANCHER> \
+  --version 2.7.5
+
+## expose agorcd:
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+## argocd create app
+argocd app create k8s-web --repo git@github.com:dytruong/deploy-to-k8s-labs.git --path try01 --dest-server https://kubernetes.default.svc --dest-namespace k8s-web-nginx
+
+
+
+### Work flow
+step 1: Build docker image with version tag
+> docker build . -t <docker_hub_username>/<docker_image>:<image_version>
+
+step 2: Push docker image to docker hub (or others)
+*Note: Authenticate before push*
+> docker login
+
+> docker push <docker_hub_username>/<docker_image>:<image_version>
+
+step 3: Init helm source git
+- Create git repository to manage helm source
+- Create helm charts
+
+step 4: use argocd to deploy k8s
+> argocd app create <app_name> --repo <git_url> --path <folder_inside_git> --dest-server <https://kubernetes.default.svc | if argocd inside k8s cluster> --dest-namespace <namespace_app>
