@@ -177,6 +177,8 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 ## argocd create app
 argocd app create k8s-web --repo git@github.com:dytruong/deploy-to-k8s-labs.git --path try01 --dest-server https://kubernetes.default.svc --dest-namespace k8s-web-nginx
 
+argocd app create authenticate-service --repo git@github.com:dytruong/deploy-to-k8s-labs.git --path authenticate-service --dest-server https://kubernetes.default.svc --dest-namespace authenticate-service
+
 
 
 ### Work flow
