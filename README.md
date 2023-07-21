@@ -197,3 +197,10 @@ step 3: Init helm source git
 
 step 4: use argocd to deploy k8s
 > argocd app create <app_name> --repo <git_url> --path <folder_inside_git> --dest-server <https://kubernetes.default.svc | if argocd inside k8s cluster> --dest-namespace <namespace_app>
+
+### Install argocd use helm
+> kubectl create namespace argocd
+
+> helm repo add dandydev https://dandydeveloper.github.io/charts
+> helm dependency build chart
+> helm upgrade --install --set server.ingress.enabled="true" --namespace="argocd" --values chart/values.yaml --values custom_values.yaml argocd-deploy chart

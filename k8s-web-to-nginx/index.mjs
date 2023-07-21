@@ -12,12 +12,18 @@ app.get('/', (req, res) => {
     res.send(helloMsg);
 });
 
-app.get('/nginx', async (req, res) => {
-    const url = 'http://nginx'
-    const response = await fetch(url);
-    const body = await response.text();
-    res.send(body);
+app.get('/auth', (req, res) => {
+    const msg = "Authenticate successfully"
+    console.log(msg)
+    res.send(msg);
 });
+
+// app.get('/nginx', async (req, res) => {
+//     const url = 'http://nginx'
+//     const response = await fetch(url);
+//     const body = await response.text();
+//     res.send(body);
+// });
 
 // Start the server
 app.listen(3000, () => {
