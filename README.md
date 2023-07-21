@@ -204,3 +204,6 @@ step 4: use argocd to deploy k8s
 > helm repo add dandydev https://dandydeveloper.github.io/charts
 > helm dependency build chart
 > helm upgrade --install --set server.ingress.enabled="true" --namespace="argocd" --values chart/values.yaml --values custom_values.yaml argocd-deploy chart
+
+
+[https://github.com:dytruong/k8s-beginer.git](https://github.com/dytruong/k8s-beginer.git)
